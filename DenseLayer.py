@@ -12,6 +12,9 @@ class DenseLayer(Layer):
         self.weights = 0.01 * numpy.random.randn(input_nodes, size)
         self.biases = [0 for _ in range(size)]
 
+        self.weights_momentum = numpy.zeros_like(self.weights)
+        self.biases_momentum = numpy.zeros_like(self.biases)
+
     def calculate_layer(self, inputs):
         self.input = inputs
         return numpy.dot(inputs, self.weights) + self.biases
@@ -24,6 +27,11 @@ class DenseLayer(Layer):
 
         return inputs_derivative
 
-    def apply_gradient(self, learning_rate):
-        self.weights += -learning_rate * self.weights_derivative
-        self.biases += -learning_rate * self.biases_derivative
+    def apply_gradient(self, learning_rate, momentum):
+        # store the gradiant applied to the weights and biases, so it can be used as momentum to calculate
+        # the next gradient
+        self.weights_momentum = momentum * self.weights_momentum - learning_rate * self.weights_derivative
+        self.biases_momentum = momentum * self.biases_momentum - learning_rate * self.biases_derivative
+
+        self.weights += self.weights_momentum
+        self.biases += self.biases_momentum

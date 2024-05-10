@@ -7,7 +7,7 @@ import SoftmaxActivationLayer
 import NeuralNetwork
 
 
-def spiral_NN(base_learning_rate, rate_decay):
+def spiral_NN(base_learning_rate, rate_decay, momentum):
 
     X, y = spiral_data(samples=300, classes=3)
 
@@ -30,8 +30,8 @@ def spiral_NN(base_learning_rate, rate_decay):
         L2A.expected_values = y
         NN.back_propagation(output, y)
 
-        L.apply_gradient(learning_rate)
-        L2.apply_gradient(learning_rate)
+        L.apply_gradient(learning_rate, momentum)
+        L2.apply_gradient(learning_rate, momentum)
 
 
-spiral_NN(1, .00001)
+spiral_NN(1, .0001, .9)

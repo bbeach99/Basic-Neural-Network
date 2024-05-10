@@ -30,11 +30,5 @@ class NeuralNetwork:
         return inputs
 
     def back_propagation(self, gradient, expected_values):
-        # simplified chain rule of softmax and cross entropy loss combined
-        # gradient = numpy.array(outputs)
-        # gradient[range(len(outputs)), expected_values] -= 1
-        # gradient = gradient / len(outputs)
-        # print(f"\nCross entropy and Softmax D:\n{gradient}")
-        # cross_entropy_cost_derivative(gradient, expected_values)
         for layer in reversed(self.layers):
             gradient = layer.back_propagate(gradient)
