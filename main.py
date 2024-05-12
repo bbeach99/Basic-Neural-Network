@@ -5,6 +5,7 @@ import DenseLayer
 import RLActivationLayer
 import SoftmaxActivationLayer
 import NeuralNetwork
+import OptimizerSGD
 
 
 def spiral_NN(base_learning_rate, rate_decay, momentum):
@@ -16,10 +17,9 @@ def spiral_NN(base_learning_rate, rate_decay, momentum):
     L2 = DenseLayer.DenseLayer(100, 3)
     L2A = SoftmaxActivationLayer.SoftmaxActivationLayer()
     NN = NeuralNetwork.NeuralNetwork([L, LA, L2, L2A])
+    optimizer = OptimizerSGD.OptimizerSGD([L, L2], base_learning_rate, rate_decay, momentum)
 
     for i in range(10000):
-
-        learning_rate = base_learning_rate * (1 / (1 + rate_decay * i))
 
         output = NN.calculate_nn(X)
         cost = NeuralNetwork.cross_entropy_cost(output, y)
@@ -30,8 +30,7 @@ def spiral_NN(base_learning_rate, rate_decay, momentum):
         L2A.expected_values = y
         NN.back_propagation(output, y)
 
-        L.apply_gradient(learning_rate, momentum)
-        L2.apply_gradient(learning_rate, momentum)
+        optimizer.update_layers()
 
 
 spiral_NN(1, .0001, .9)
