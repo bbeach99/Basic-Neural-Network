@@ -15,6 +15,9 @@ class DenseLayer(Layer):
         self.weights_momentum = numpy.zeros_like(self.weights)
         self.biases_momentum = numpy.zeros_like(self.biases)
 
+        self.weights_cache = numpy.zeros_like(self.weights)
+        self.biases_cache = numpy.zeros_like(self.biases)
+
     def calculate_layer(self, inputs):
         self.input = inputs
         return numpy.dot(inputs, self.weights) + self.biases

@@ -30,5 +30,6 @@ class NeuralNetwork:
         return inputs
 
     def back_propagation(self, gradient, expected_values):
+        self.layers[-1].expected_values = expected_values
         for layer in reversed(self.layers):
             gradient = layer.back_propagate(gradient)
