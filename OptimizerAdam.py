@@ -2,7 +2,7 @@ import numpy
 
 
 class OptimizerAdam:
-    def __init__(self, layers, learning_rate=1, decay=0, epsilon=1e-7, beta_momentum=.9, beta_cache=.999):
+    def __init__(self, layers, learning_rate=1, decay=0, beta_momentum=.9, beta_cache=.999, epsilon=1e-7):
         self.base_learning_rate = learning_rate
         self.learning_rate = learning_rate
         self.decay = decay
